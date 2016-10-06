@@ -1,10 +1,12 @@
 var express = require('express');
 var app = express();
 
+app.use(express.static('public'));
+
 // This responds with "Hello World" on the homepage
 app.get('/', function (req, res) {
    console.log("Got a GET request for the homepage");
-   res.send('Welcome to Game Server');
+   res.sendFile( __dirname + "/" + "index.html" );
 })
 
 // This responds a POST request for the homepage
