@@ -1,37 +1,73 @@
+//--------------------------------------------------------
+//
+//                GAME SERVER
+//
+//--------------------------------------------------------
+
+
 var express = require('express');
 var app = express();
+var fs = require("fs");
 
+// importing modules
+var Users  = require("./views/users.js");
+var Scores = require("./views/scores.js");
+var Routes = require("./views/routes.js");
+var API = require("./views/api.js"); 
+
+var users  = new Users();
+var routes = new Routes();
+var scores = new Scores();
+var api = new API();
+
+// static folder to fetch html, css, etc.
 app.use(express.static('public'));
 
 // This responds with "Hello World" on the homepage
 app.get('/', function (req, res) {
-   console.log("Got a GET request for the homepage");
+   console.log("GET homepage");
    res.sendFile( __dirname + "/" + "index.html" );
 })
 
-// This responds a POST request for the homepage
-app.post('/', function (req, res) {
-   console.log("Got a POST request for the homepage");
-   res.send('Hello POST');
-})
+//user login url
+app.get('/login', users.login);
 
-// This responds a DELETE request for the /del_user page.
-app.delete('/del_user', function (req, res) {
-   console.log("Got a DELETE request for /del_user");
-   res.send('Hello DELETE');
-})
+//add score url
+app.get('/addScore/', scores.addScore);
 
-// This responds a GET request for the /list_user page.
-app.get('/list_user', function (req, res) {
-   console.log("Got a GET request for /list_user");
-   res.send('Page Listing');
-})
+app.get('/getHighestScore/', scores.getHighestScore);
 
-// This responds a GET request for abcd, abxcd, ab123cd, and so on
-app.get('/ab*cd', function(req, res) {   
-   console.log("Got a GET request for /ab*cd");
-   res.send('Page Pattern Match');
-})
+// this responds top 10 score 
+app.get('/getTop10Score/', scores.getTop10Score);
+
+// This responds with all routes 
+app.get('/routes', routes.routes);
+
+//test url
+app.get('/logged_in/', function(req, res){
+	console.log("User logged in ");
+	
+	var username = req.query.name
+	var password = req.query.password
+	
+	console.log("------------[ Logs for user login ]---------------");
+    console.log(" Username: " +  username);
+	console.log(" Password: " +  password);
+    console.log("--------------------------------------------------");
+
+	res.send("<p align=center> Username : " + username +"</p>"+
+			 "<p align=center> Password : " + password +"</p>");
+});
+
+
+//api demo urls
+app.get('/api_login/', api.login);
+
+
+
+
+
+
 
 var server = app.listen(8081, function () {
 
