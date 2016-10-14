@@ -2,4 +2,12 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Login
+  hr
+
+  form(method="post", action="/api/login")
+    p Username
+      input(type="text", name="Username")
+    p Password
+      input(type="password", name="Password")
+    input(type="submit", value="Login")
