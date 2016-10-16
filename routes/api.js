@@ -23,15 +23,20 @@ router.post('/login', function(req, res, next) {
 
     console.log("+++ DB=" + DB);
 
-    DB.User.findAll().then(function(users) {
+    var where = {
+    	username: username,
+    	password: password
+  	};
+
+    DB.User.findAll({where: where}).then(function(users) {
   		console.log(users)
+  		if(users.length > 0) {
+  			res.send("{'err': 0, 'msg': 'login successful'}");
+  	   	} else {
+  	   		res.send("{'err': 1, 'msg': 'invalid username/password'}");
+  	   }
 	});
-
-
-
-
-    //res.render('api_demo', { title: 'API Demo' });
-    res.send('Loggin...')
+    
 });
 
 module.exports = router;
