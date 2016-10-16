@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var DB  = require('../models/db');
+
 /* api end points reference page. */
 router.get('/', function(req, res, next) {
   res.render('api_demo', { title: 'API Endpoints Are' });
@@ -18,6 +20,15 @@ router.post('/login', function(req, res, next) {
 
     console.log('username:' +  username);
     console.log('password:' +  password);
+
+    console.log("+++ DB=" + DB);
+
+    DB.User.findAll().then(function(users) {
+  		console.log(users)
+	});
+
+
+
 
     //res.render('api_demo', { title: 'API Demo' });
     res.send('Loggin...')
