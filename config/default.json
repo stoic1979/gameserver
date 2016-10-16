@@ -1,0 +1,9 @@
+{
+  // database config 
+  "dbConfig": {
+      "dbName": "gamedb",
+      "username": "root",
+      "password": ""
+    },
+
+}
