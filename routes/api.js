@@ -63,6 +63,8 @@ router.post('/register', function(req, res, next) {
   email    = req.body.Email;
 
   // composing query with 'where' clause
+  // needed to ensure that username should
+  // not exist in db
   var query = { 
       where: {
         username: username
