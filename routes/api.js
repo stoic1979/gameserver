@@ -127,10 +127,16 @@ router.post('/add_score', function(req, res, next) {
 //----------------------------------------------
 router.post('/get_high_score', function(req, res, next) {
 
-  // get high score upto N
-  // n = req.body.n;
+  // get high score upto 'n'
+  n = parseInt(req.body.n);
 
-  DB.Score.findAll().then(function(scores) {
+ var query = {
+    offset: 0,
+    limit: n,
+    order: 'value DESC'
+  }
+
+  DB.Score.findAll(query).then(function(scores) {
       res.send(JSON.stringify(scores));
   });
     
