@@ -38,12 +38,17 @@ function db(Sequelize) {
    // get score model
   this.Score = require('./scores')(this.sequelize)
 
+  // add Foregin key User to Score Model
+  //this.User.hasOne(this.Score);
+
+  this.Score.belongsTo(this.User);
+
 
 }
 
 db.prototype.sync = function(force) {
   this.User.sync({force: force});
-   this.Score.sync({force: force});
+  this.Score.sync({force: force}); 
 };
 
 var DB = new db(Sequelize);
