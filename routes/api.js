@@ -33,12 +33,17 @@ router.post('/login', function(req, res, next) {
   };
 
   DB.User.findAll(query).then(function(users) {
-  		console.log(users)
+  		
+      var ret = {
+        err: 1, 
+        msg: 'invalid username/password'
+      };
+
   		if(users.length > 0) {
-  			res.send("{'err': 0, 'msg': 'login successful'}");
-  	   	} else {
-  	   		res.send("{'err': 1, 'msg': 'invalid username/password'}");
-  	   }
+  			   ret.err = 0;
+           ret.msg = 'login successful';
+  	   	} 
+        res.send(JSON.stringify(ret));
 	});
     
 });
