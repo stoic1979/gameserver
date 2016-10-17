@@ -1,3 +1,9 @@
+//-------------------------------------------------------------
+//
+//   ROUTES FOR REST APIs
+//
+//-------------------------------------------------------------
+
 var express = require('express');
 var router = express.Router();
 
@@ -17,11 +23,6 @@ router.get('/demo', function(req, res, next) {
 router.post('/login', function(req, res, next) {
     username = req.body.Username;
     password = req.body.Password;
-
-    console.log('username:' +  username);
-    console.log('password:' +  password);
-
-    console.log("+++ DB=" + DB);
 
     var where = {
     	username: username,
