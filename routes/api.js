@@ -133,7 +133,8 @@ router.post('/get_high_score', function(req, res, next) {
  var query = {
     offset: 0,
     limit: n,
-    order: 'value DESC'
+    order: 'value DESC',
+    attributes: ['userid', 'value']
   }
 
   DB.Score.findAll(query).then(function(scores) {
