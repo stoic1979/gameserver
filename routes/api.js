@@ -159,7 +159,12 @@ router.post('/get_high_score', function(req, res, next) {
 //----------------------------------------------
 router.get('/get_usernames', function(req, res, next) {
 
-  DB.User.findAll().then(function(users) {
+  var query = {
+    order: 'username ASC',
+    attributes: ['id', 'username', 'email'] // not password
+  }
+
+  DB.User.findAll(query).then(function(users) {
       res.send(JSON.stringify(users));
   });
     
