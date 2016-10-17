@@ -112,7 +112,7 @@ router.post('/add_score', function(req, res, next) {
       };
 
       if(users.length > 0) {
-        DB.Score.create({userid: userid, value:score});
+        DB.Score.create({userId: userid, value:score});
         ret.err = 0;
         ret.msg = 'score added successfully'
       } 
@@ -138,7 +138,29 @@ router.post('/get_high_score', function(req, res, next) {
   }
 
   DB.Score.findAll(query).then(function(scores) {
+
+      for(var i in scores) {
+        console.log("---score=" + scores[i]);
+
+        scores[i].getUser().then(function(user) {
+            console.log('-- got user = ' + user);
+        });
+
+      }
+      //console.log(scores);
       res.send(JSON.stringify(scores));
+  });
+    
+});
+
+
+//----------------------------------------------
+// GET USERNAMES
+//----------------------------------------------
+router.get('/get_usernames', function(req, res, next) {
+
+  DB.User.findAll().then(function(users) {
+      res.send(JSON.stringify(users));
   });
     
 });
