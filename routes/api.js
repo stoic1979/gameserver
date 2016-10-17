@@ -21,15 +21,18 @@ router.get('/demo', function(req, res, next) {
 
 /* api login */
 router.post('/login', function(req, res, next) {
-    username = req.body.Username;
-    password = req.body.Password;
+  username = req.body.Username;
+  password = req.body.Password;
 
-    var where = {
-    	username: username,
-    	password: password
-  	};
+  // composing query with 'where' clause
+  var query = { 
+      where: {
+        username: username,
+        password: password
+      }
+  };
 
-    DB.User.findAll({where: where}).then(function(users) {
+  DB.User.findAll(query).then(function(users) {
   		console.log(users)
   		if(users.length > 0) {
   			res.send("{'err': 0, 'msg': 'login successful'}");
