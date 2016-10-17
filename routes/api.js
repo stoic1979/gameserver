@@ -87,4 +87,38 @@ router.post('/register', function(req, res, next) {
     
 });
 
+//----------------------------------------------
+// ADD SCORE API
+//----------------------------------------------
+router.post('/add_score', function(req, res, next) {
+  userid = req.body.Userid;
+  score  = req.body.Score;
+
+  // composing query with 'where' clause
+  // needed to ensure that userid is valid
+  var query = { 
+      where: {
+        id: userid
+      }
+  };
+
+  DB.User.findAll(query).then(function(users) {
+      
+      var ret = {
+        err: 1, 
+        msg: 'invalid userid'
+      };
+
+      if(users.length > 0) {
+        DB.Score.create({userid: userid, value:score});
+        ret.err = 0;
+        ret.msg = 'score added successfully'
+      } 
+      
+      res.send(JSON.stringify(ret));
+  });
+    
+});
+
+
 module.exports = router;
