@@ -5,21 +5,27 @@
 //-------------------------------------------------------------
 
 var express = require('express');
-var router = express.Router();
+var router  = express.Router();
+var DB      = require('../models/db');
 
-var DB  = require('../models/db');
 
-/* api end points reference page. */
+//----------------------------------------------
+// API END POINTS LIST
+//----------------------------------------------
 router.get('/', function(req, res, next) {
   res.render('api_demo', { title: 'API Endpoints Are' });
 });
 
-/* api demo page */
+//----------------------------------------------
+// DEMO PAGE
+//----------------------------------------------
 router.get('/demo', function(req, res, next) {
   res.render('api_demo', { title: 'API Demo' });
 });
 
-/* api login */
+//----------------------------------------------
+// LOGIN API
+//----------------------------------------------
 router.post('/login', function(req, res, next) {
   username = req.body.Username;
   password = req.body.Password;
