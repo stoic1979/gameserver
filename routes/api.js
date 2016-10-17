@@ -122,5 +122,19 @@ router.post('/add_score', function(req, res, next) {
     
 });
 
+//----------------------------------------------
+// GET HIGH SCORE API
+//----------------------------------------------
+router.post('/get_high_score', function(req, res, next) {
+
+  // get high score upto N
+  // n = req.body.n;
+
+  DB.Score.findAll().then(function(scores) {
+      res.send(JSON.stringify(scores));
+  });
+    
+});
+
 
 module.exports = router;
