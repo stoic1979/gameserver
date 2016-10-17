@@ -10,6 +10,7 @@ var dbConfig = config.get('dbConfig');
 var Sequelize = require('sequelize');
 
 var users = require('./users');
+var scores = require('./scores');
 
 
 function db(Sequelize) {
@@ -34,11 +35,15 @@ function db(Sequelize) {
   // get user model
   this.User = require('./users')(this.sequelize)
 
+   // get score model
+  this.Score = require('./scores')(this.sequelize)
+
 
 }
 
 db.prototype.sync = function(force) {
   this.User.sync({force: force});
+   this.Score.sync({force: force});
 };
 
 var DB = new db(Sequelize);
