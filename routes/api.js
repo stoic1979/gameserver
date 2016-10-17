@@ -54,4 +54,37 @@ router.post('/login', function(req, res, next) {
     
 });
 
+//----------------------------------------------
+// REGISTER API
+//----------------------------------------------
+router.post('/register', function(req, res, next) {
+  username = req.body.Username;
+  password = req.body.Password;
+  email    = req.body.Email;
+
+  // composing query with 'where' clause
+  var query = { 
+      where: {
+        username: username
+      }
+  };
+
+  DB.User.findAll(query).then(function(users) {
+      
+      var ret = {
+        err: 1, 
+        msg: 'username already exists'
+      };
+
+      if(users.length == 0) {
+        DB.User.create({username: username, password:password, email: email});
+        ret.err = 0;
+        ret.msg = 'registration successful'
+      } 
+      
+      res.send(JSON.stringify(ret));
+  });
+    
+});
+
 module.exports = router;
