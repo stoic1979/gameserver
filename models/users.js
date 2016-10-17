@@ -1,3 +1,10 @@
+//-------------------------------------------------------------
+//
+//   USER MODEL
+//
+//-------------------------------------------------------------
+
+// need sequelize for constants etc
 var Sequelize = require('sequelize');
 
 module.exports = function (sequelize) {
@@ -9,7 +16,10 @@ module.exports = function (sequelize) {
       },
       password: {
         type: Sequelize.STRING
-      }
+      },
+      email: {
+        type: Sequelize.STRING
+      },
     };
 
     return sequelize.define('user', user);
