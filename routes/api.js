@@ -10,21 +10,27 @@ var DB      = require('../models/db');
 
 
 //----------------------------------------------
-// API END POINTS LIST
+//
+//             API END POINTS LIST
+//
 //----------------------------------------------
 router.get('/', function(req, res, next) {
   res.render('api_demo', { title: 'API Endpoints Are' });
 });
 
 //----------------------------------------------
-// DEMO PAGE
+//
+//                DEMO PAGE
+//
 //----------------------------------------------
 router.get('/demo', function(req, res, next) {
   res.render('api_demo', { title: 'API Demo' });
 });
 
 //----------------------------------------------
-// LOGIN API
+//
+//               LOGIN API
+//
 //----------------------------------------------
 router.post('/login', function(req, res, next) {
   username = req.body.Username;
@@ -55,7 +61,9 @@ router.post('/login', function(req, res, next) {
 });
 
 //----------------------------------------------
-// REGISTER API
+//
+//                 REGISTER API
+//
 //----------------------------------------------
 router.post('/register', function(req, res, next) {
   username = req.body.Username;
@@ -90,17 +98,19 @@ router.post('/register', function(req, res, next) {
 });
 
 //----------------------------------------------
-// ADD SCORE API
+//
+//                ADD SCORE API
+//
 //----------------------------------------------
 router.post('/add_score', function(req, res, next) {
-  userid = req.body.Userid;
-  score  = req.body.Score;
+  username = req.body.username;
+  score  = req.body.score;
 
   // composing query with 'where' clause
   // needed to ensure that userid is valid
   var query = { 
       where: {
-        id: userid
+        username: username
       }
   };
 
@@ -108,11 +118,11 @@ router.post('/add_score', function(req, res, next) {
       
       var ret = {
         err: 1, 
-        msg: 'invalid userid'
+        msg: 'invalid username'
       };
 
       if(users.length > 0) {
-        DB.Score.create({userId: userid, value:score});
+        DB.Score.create({username: username, value:score});
         ret.err = 0;
         ret.msg = 'score added successfully'
       } 
@@ -123,7 +133,9 @@ router.post('/add_score', function(req, res, next) {
 });
 
 //----------------------------------------------
-// GET HIGH SCORE API
+//
+//               GET HIGH SCORE API
+//
 //----------------------------------------------
 router.post('/get_high_score', function(req, res, next) {
 
@@ -134,20 +146,15 @@ router.post('/get_high_score', function(req, res, next) {
     offset: 0,
     limit: n,
     order: 'value DESC',
-    attributes: ['userid', 'value']
+    attributes: ['username', 'value']
   }
 
   DB.Score.findAll(query).then(function(scores) {
 
-      for(var i in scores) {
-        console.log("---score=" + scores[i]);
-
-        scores[i].getUser().then(function(user) {
-            console.log('-- got user = ' + user);
-        });
-
-      }
-      //console.log(scores);
+      //---------------------------------------
+      // sending JSON for all high scores
+      // sorted in descending order by scores
+      //---------------------------------------
       res.send(JSON.stringify(scores));
   });
     
@@ -155,7 +162,9 @@ router.post('/get_high_score', function(req, res, next) {
 
 
 //----------------------------------------------
-// GET USERNAMES
+//
+//               GET USERNAMES
+//
 //----------------------------------------------
 router.get('/get_usernames', function(req, res, next) {
 
@@ -169,6 +178,9 @@ router.get('/get_usernames', function(req, res, next) {
   });
     
 });
+
+
+
 
 
 module.exports = router;
