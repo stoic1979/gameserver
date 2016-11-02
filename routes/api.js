@@ -178,7 +178,17 @@ router.post('/forgot_password', function(req, res, next) {
   }
 
   DB.User.findAll(query).then(function(users) {
-      res.send(JSON.stringify(users));
+
+    var ret = {
+        err: 1, 
+        msg: 'email does not exist'
+      };
+
+      if(users.length > 0) {
+        res.send(JSON.stringify(users));
+      } else {
+        res.send(JSON.stringify(ret));
+      }
   });
     
 });
