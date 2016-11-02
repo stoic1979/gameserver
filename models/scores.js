@@ -11,19 +11,15 @@ module.exports = function (sequelize) {
     
     var score = 
     {
+      username: {
+        type: Sequelize.STRING
+      },
       value: {
         type: Sequelize.BIGINT
       },
     };
 
-    var Score = sequelize.define('score', score, {
-    instanceMethods: {
-      getUser: function() {
-        console.log("++++++++++++++++++++++++++++ RETURNING abc ++++++++++++++++++++++++++++++");
-        return 'abc';
-      }
-    }
-  });
+    var Score = sequelize.define('score', score);
 
 
     return Score;
