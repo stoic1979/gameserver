@@ -8,6 +8,8 @@ var express = require('express');
 var router  = express.Router();
 var DB      = require('../models/db');
 
+var Mailer = require('../utils/mailer');
+
 
 //----------------------------------------------
 //
@@ -184,11 +186,18 @@ router.post('/forgot_password', function(req, res, next) {
         msg: 'email does not exist'
       };
 
+
       if(users.length > 0) {
-        res.send(JSON.stringify(users));
-      } else {
-        res.send(JSON.stringify(ret));
-      }
+
+        // email the password to user
+        Mailer.sendForgotPasswordEmail(email, "Your Password For Everest Baccarat Kindgom", "Your password is " + users[0].password);
+        
+        ret["err"] = 0;
+        ret["msg"] = "Password is sent to your email"
+      } 
+
+      res.send(JSON.stringify(ret));
+      
   });
     
 });
@@ -207,6 +216,7 @@ router.get('/get_usernames', function(req, res, next) {
   }
 
   DB.User.findAll(query).then(function(users) {
+
       res.send(JSON.stringify(users));
   });
     
