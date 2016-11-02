@@ -163,6 +163,29 @@ router.post('/get_high_score', function(req, res, next) {
 
 //----------------------------------------------
 //
+//               FORGOT PASSWORD
+//
+//----------------------------------------------
+router.post('/forgot_password', function(req, res, next) {
+
+  email = req.body.email;
+
+  var query = {
+    where: {
+        email: email
+      },
+    attributes: ['password'] // fetch only password
+  }
+
+  DB.User.findAll(query).then(function(users) {
+      res.send(JSON.stringify(users));
+  });
+    
+});
+
+
+//----------------------------------------------
+//
 //               GET USERNAMES
 //
 //----------------------------------------------
@@ -178,8 +201,6 @@ router.get('/get_usernames', function(req, res, next) {
   });
     
 });
-
-
 
 
 
