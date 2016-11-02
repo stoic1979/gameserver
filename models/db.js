@@ -41,7 +41,7 @@ function db(Sequelize) {
   // add Foregin key User to Score Model
   //this.User.hasOne(this.Score);
 
-  this.Score.belongsTo(this.User);
+  // this.Score.belongsTo(this.User);
 
 
 }
